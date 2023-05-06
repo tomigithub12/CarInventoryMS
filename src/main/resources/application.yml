@@ -1,0 +1,21 @@
+spring:
+    rabbitmq:
+        host: ec2-3-120-159-96.eu-central-1.compute.amazonaws.com
+        port: 8081
+        username: guest
+        password: guest
+    main:
+        web-application-type: none
+    data:
+        mongodb:
+            database: Car
+            uri: mongodb+srv://tester:testerpw@customers.4lge2rv.mongodb.net/?retryWrites=true&w=majority
+
+#spring.port = 8081
+
+
+#spring.rabbitmq.listener.simple.default-receive-queue=rpc_reply_msg_queue
+#spring.rabbitmq.publisher-confirm-type=correlated
+#spring.rabbitmq.publisher-returns=true
+
+
