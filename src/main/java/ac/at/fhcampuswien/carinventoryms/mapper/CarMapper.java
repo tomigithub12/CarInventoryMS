@@ -4,8 +4,10 @@ import ac.at.fhcampuswien.carinventoryms.dto.CarListDTO;
 import ac.at.fhcampuswien.carinventoryms.models.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Component
 public class CarMapper {
 
     public CarListDTO carToDisplayList(Car car, float dailyCostConverted, float totalCost){

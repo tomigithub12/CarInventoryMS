@@ -4,14 +4,9 @@ package ac.at.fhcampuswien.carinventoryms.controller;
 import ac.at.fhcampuswien.carinventoryms.dto.CarListDTO;
 import ac.at.fhcampuswien.carinventoryms.exceptions.CarNotAvailableException;
 import ac.at.fhcampuswien.carinventoryms.exceptions.CarNotFoundException;
+import ac.at.fhcampuswien.carinventoryms.exceptions.CurrencyServiceNotAvailableException;
 import ac.at.fhcampuswien.carinventoryms.models.Car;
 import ac.at.fhcampuswien.carinventoryms.service.CarRestService;
-import ac.at.fhcampuswien.carrental.entity.models.Car;
-import ac.at.fhcampuswien.carrental.exception.exceptions.CarNotAvailableException;
-import ac.at.fhcampuswien.carrental.exception.exceptions.CarNotFoundException;
-import ac.at.fhcampuswien.carrental.exception.exceptions.CurrencyServiceNotAvailableException;
-import ac.at.fhcampuswien.carrental.rest.models.CarListDTO;
-import ac.at.fhcampuswien.carrental.rest.services.CarRestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,7 +51,7 @@ public class CarController {
     public ResponseEntity<List<CarListDTO>> listAvailableCars(@RequestParam("currentCurrency") String currentCurrency,
                                                               @RequestParam("chosenCurrency") String chosenCurrency,
                                                               @RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from,
-                                                              @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to) throws CarNotAvailableException, CurrencyServiceNotAvailableException {
+                                                              @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to) throws CarNotAvailableException {
         List<CarListDTO> allAvailableCars = carRestService.getAvailableCars(currentCurrency, chosenCurrency, from, to);
         return new ResponseEntity<>(allAvailableCars, HttpStatus.OK);
     }

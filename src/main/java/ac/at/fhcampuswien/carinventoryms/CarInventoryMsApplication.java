@@ -1,12 +1,18 @@
 package ac.at.fhcampuswien.carinventoryms;
 
+import ac.at.fhcampuswien.carinventoryms.dto.CarListDTO;
 import ac.at.fhcampuswien.carinventoryms.models.Car;
 import ac.at.fhcampuswien.carinventoryms.repository.CarRepository;
+import ac.at.fhcampuswien.carinventoryms.service.CarRestService;
 import jakarta.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,7 +20,10 @@ import java.util.stream.Stream;
 @SpringBootApplication
 public class CarInventoryMsApplication {
 
+    Logger logger = LoggerFactory.getLogger(CarInventoryMsApplication.class);
 
+    @Autowired
+    CarRestService carRestService;
     @Autowired
     CarRepository carRepository;
     @PostConstruct
@@ -27,10 +36,17 @@ public class CarInventoryMsApplication {
                 new Car("5", 90, "Mercedes Benz", "CLA 180", "122", "2016-05-01", "Petrol", "https://cdn.guterate.net/prod/2022/07/451536_01.jpg")
         ).collect(Collectors.toList());
         carRepository.saveAll(cars);
-        List<String> x = Stream.of("1", "2", "3").collect(Collectors.toList());
-        List<Car> myCars = carRepository.findCarsNotInList(x);
-        Car myCar = carRepository.getCarById("5");
-        System.out.print("END");
+        logger.warn("Cars Database Inititalization succesful!");
+
+        List<CarListDTO> freeCars = carRestService.getAvailableCars("USD", "EUR", LocalDate.of(2023,01,01), LocalDate.of(2023,07,30));
+
+        logger.warn("Retrieved List of available Cars.");
+
+        if(freeCars.size() > 1){
+            logger.warn("Something went wrong. Only one carId expected, but got more!");
+        } else {
+            logger.warn("Success!");
+        }
 
     }
     public static void main(String[] args) {
