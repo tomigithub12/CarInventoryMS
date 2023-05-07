@@ -13,4 +13,7 @@ public interface CarRepository extends MongoRepository<Car, String> {
 
     @Query(value = "{id: ?0}")
     Car getCarById(String id);
+
+    @Query(value = "{ id: { $in: ?0 } }")
+    List<Car> findCarByIds(List<String> ids);
 }

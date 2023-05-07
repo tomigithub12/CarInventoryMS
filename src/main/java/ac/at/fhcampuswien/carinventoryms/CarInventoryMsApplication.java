@@ -37,7 +37,7 @@ public class CarInventoryMsApplication {
         ).collect(Collectors.toList());
         carRepository.saveAll(cars);
         logger.warn("Cars Database Inititalization succesful!");
-
+/*
         List<CarListDTO> freeCars = carRestService.getAvailableCars("USD", "EUR", LocalDate.of(2023,01,01), LocalDate.of(2023,07,30));
 
         logger.warn("Retrieved List of available Cars.");
@@ -46,7 +46,7 @@ public class CarInventoryMsApplication {
             logger.warn("Something went wrong. Only one carId expected, but got more!");
         } else {
             logger.warn("Success!");
-        }
+        }*/
 
     }
     public static void main(String[] args) {

@@ -14,6 +14,8 @@ public class RabbitMQConfig {
     public static final String EXCHANGERATE_MESSAGE_QUEUE = "exchangeRate_msg_queue";
     public static final String EXCHANGERATE_REPLY_MESSAGE_QUEUE = "exchangeRate_reply_msg_queue";
     public static final String BOOKED_CARS_MESSAGE_QUEUE = "bookedCars_msg_queue";
+    public static final String GET_CARS_MESSAGE_QUEUE = "getCars_msg_queue";
+    public static final String GET_FREE_CARS_MESSAGE_QUEUE = "getFreeCars_msg_queue";
 
 
     @Bean
@@ -21,6 +23,7 @@ public class RabbitMQConfig {
 
         return new Queue(EXCHANGERATE_MESSAGE_QUEUE);
     }
+
 
     @Bean
     Queue replyQueue1() {
@@ -31,6 +34,17 @@ public class RabbitMQConfig {
     @Bean
     Queue msgQueue2(){
         return new Queue(BOOKED_CARS_MESSAGE_QUEUE);
+    }
+
+    @Bean
+    Queue msgQueue3(){
+        return new Queue(GET_CARS_MESSAGE_QUEUE);
+    }
+
+    @Bean
+    Queue msgQueue4() {
+
+        return new Queue(GET_FREE_CARS_MESSAGE_QUEUE);
     }
 
     @Bean
@@ -49,6 +63,18 @@ public class RabbitMQConfig {
     Binding msgBinding2() {
 
         return BindingBuilder.bind(msgQueue2()).to(exchange()).with(BOOKED_CARS_MESSAGE_QUEUE);
+    }
+
+    @Bean
+    Binding msgBinding3() {
+
+        return BindingBuilder.bind(msgQueue3()).to(exchange()).with(GET_CARS_MESSAGE_QUEUE);
+    }
+
+    @Bean
+    Binding msgBinding4() {
+
+        return BindingBuilder.bind(msgQueue4()).to(exchange()).with(GET_FREE_CARS_MESSAGE_QUEUE);
     }
 
     @Bean
