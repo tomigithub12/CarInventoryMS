@@ -31,9 +31,22 @@ public class CarEntityService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    public List<Car> getFreeCarsBetweenDates(AvailableCarsRequestDto availableCarsRequestDto) throws CarNotAvailableException {
+
+        //TODO RabbitMQ
+        logger.warn("Retrieved response from BookingMS!");
+        List<String> availableCarIDs = availableCarsRequestDto.getBookedCarIds();
+
+        if(availableCarIDs.isEmpty()) availableCarIDs.add("0");
+        List<Car> allAvailableCars = carRepository.findCarsNotInList(availableCarIDs);
+        if (allAvailableCars.isEmpty()) {
+            throw new CarNotAvailableException("No cars available in this time period");
+        }
+        return allAvailableCars;
+    }
 
     public List<Car> getFreeCarsBetweenDates(LocalDate from, LocalDate to) throws CarNotAvailableException {
-        AvailableCarsRequestDto availableCarsRequestDto = new AvailableCarsRequestDto(from, to);
+        AvailableCarsRequestDto availableCarsRequestDto = new AvailableCarsRequestDto(from, to, List.of(""));
 
         //TODO RabbitMQ
         List<String> availableCarIDsAsJson = (List<String>) rabbitTemplate.convertSendAndReceive(RabbitMQConfig.CARS_EXCHANGE, RabbitMQConfig.BOOKED_CARS_MESSAGE_QUEUE, availableCarsRequestDto);

@@ -39,7 +39,7 @@ public class RequestListener {
     public CarsResponseDto onGetFreeCarsBetweenDatesRequest(AvailableCarsRequestDto availableCarsRequestDto) throws CarNotAvailableException {
         logger.warn("Retrieved request from BookingMS");
         CarsResponseDto carsResponseDto = new CarsResponseDto();
-        List<Car> cars = carEntityService.getFreeCarsBetweenDates(availableCarsRequestDto.getFrom(), availableCarsRequestDto.getTo());
+        List<Car> cars = carEntityService.getFreeCarsBetweenDates(availableCarsRequestDto);
         carsResponseDto.setCars(cars);
         return carsResponseDto;
     }
