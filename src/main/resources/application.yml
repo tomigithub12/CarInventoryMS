@@ -4,8 +4,6 @@ spring:
         port: 5672
         username: guest
         password: guest
-    main:
-        web-application-type: none
     data:
         mongodb:
             database: Car

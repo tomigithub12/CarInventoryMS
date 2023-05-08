@@ -4,6 +4,8 @@ import ac.at.fhcampuswien.carinventoryms.dto.CarListDTO;
 import ac.at.fhcampuswien.carinventoryms.models.Car;
 import ac.at.fhcampuswien.carinventoryms.repository.CarRepository;
 import ac.at.fhcampuswien.carinventoryms.service.CarRestService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
+@OpenAPIDefinition(info = @Info(title = "CarInventoryMS API", version = "1.0"))
 public class CarInventoryMsApplication {
 
     Logger logger = LoggerFactory.getLogger(CarInventoryMsApplication.class);

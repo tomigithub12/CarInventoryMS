@@ -2,6 +2,7 @@ package ac.at.fhcampuswien.carinventoryms.service;
 
 import ac.at.fhcampuswien.carinventoryms.config.RabbitMQConfig;
 import ac.at.fhcampuswien.carinventoryms.dto.AvailableCarsRequestDto;
+import ac.at.fhcampuswien.carinventoryms.dto.FreeCarsRequestDto;
 import ac.at.fhcampuswien.carinventoryms.exceptions.CarNotAvailableException;
 import ac.at.fhcampuswien.carinventoryms.exceptions.CarNotFoundException;
 import ac.at.fhcampuswien.carinventoryms.models.Car;
@@ -33,9 +34,8 @@ public class CarEntityService {
 
     public List<Car> getFreeCarsBetweenDates(AvailableCarsRequestDto availableCarsRequestDto) throws CarNotAvailableException {
 
-        //TODO RabbitMQ
-        logger.warn("Retrieved response from BookingMS!");
-        List<String> availableCarIDs = availableCarsRequestDto.getBookedCarIds();
+        List<String> availableCarIDsAsJson = availableCarsRequestDto.getBookedCarIds();
+        List<String> availableCarIDs = convertJsonListToList(availableCarIDsAsJson);
 
         if(availableCarIDs.isEmpty()) availableCarIDs.add("0");
         List<Car> allAvailableCars = carRepository.findCarsNotInList(availableCarIDs);
@@ -46,11 +46,9 @@ public class CarEntityService {
     }
 
     public List<Car> getFreeCarsBetweenDates(LocalDate from, LocalDate to) throws CarNotAvailableException {
-        AvailableCarsRequestDto availableCarsRequestDto = new AvailableCarsRequestDto(from, to, List.of(""));
+        FreeCarsRequestDto freeCarsRequestDto = new FreeCarsRequestDto(from, to);
 
-        //TODO RabbitMQ
-        List<String> availableCarIDsAsJson = (List<String>) rabbitTemplate.convertSendAndReceive(RabbitMQConfig.CARS_EXCHANGE, RabbitMQConfig.BOOKED_CARS_MESSAGE_QUEUE, availableCarsRequestDto);
-        logger.warn("Retrieved response from BookingMS!");
+        List<String> availableCarIDsAsJson = (List<String>) rabbitTemplate.convertSendAndReceive(RabbitMQConfig.CARS_EXCHANGE, RabbitMQConfig.BOOKED_CARS_MESSAGE_QUEUE, freeCarsRequestDto);
         List<String> availableCarIDs = convertJsonListToList(availableCarIDsAsJson);
 
         if(availableCarIDs.isEmpty()) availableCarIDs.add("0");

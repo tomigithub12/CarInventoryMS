@@ -28,7 +28,7 @@ public class RequestListener {
 
     @RabbitListener(queues = RabbitMQConfig.GET_CARS_MESSAGE_QUEUE)
     public CarsResponseDto onGetCarsRequest(List<String> carIds) {
-        logger.warn("Retrieved request from BookingMS");
+        logger.warn("Retrieved request from BookingMS to get Cars By Ids");
         CarsResponseDto carsResponseDto = new CarsResponseDto();
         List<Car> cars = carRepository.findCarByIds(carIds);
         carsResponseDto.setCars(cars);
@@ -37,7 +37,7 @@ public class RequestListener {
 
     @RabbitListener(queues = RabbitMQConfig.GET_FREE_CARS_MESSAGE_QUEUE)
     public CarsResponseDto onGetFreeCarsBetweenDatesRequest(AvailableCarsRequestDto availableCarsRequestDto) throws CarNotAvailableException {
-        logger.warn("Retrieved request from BookingMS");
+        logger.warn("Retrieved request from BookingMS to get all available Cars");
         CarsResponseDto carsResponseDto = new CarsResponseDto();
         List<Car> cars = carEntityService.getFreeCarsBetweenDates(availableCarsRequestDto);
         carsResponseDto.setCars(cars);

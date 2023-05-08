@@ -29,6 +29,8 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-annotations:2.2.7'
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
 

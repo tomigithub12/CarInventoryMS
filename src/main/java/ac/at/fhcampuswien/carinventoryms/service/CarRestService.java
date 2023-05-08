@@ -54,7 +54,6 @@ public class CarRestService {
         int bookingDays = (int) DAYS.between(from, to) + 1;
         List<Car> availableCars = carEntityService.getFreeCarsBetweenDates(from, to);
         double exchangeRate = (double) rabbitTemplate.convertSendAndReceive(RabbitMQConfig.CARS_EXCHANGE, RabbitMQConfig.EXCHANGERATE_MESSAGE_QUEUE, conversionRequestDto);
-        logger.warn("Retrieved response from CurrencyConverterMS!");
 
         for (Car c : availableCars) {
             float dailyCostConverted = (float) (c.getDailyCost() * exchangeRate);
